@@ -297,14 +297,7 @@
             }
         }
 
-        // نمایش پیام خوشامدگویی
-        function showWelcomeMessage() {
-            welcomeMessage.classList.add('show');
-            setTimeout(() => {
-                welcomeMessage.classList.remove('show');
-            }, 4000);
-        }
-
+  
         // مدیریت خطاهای صوتی
         customSound.addEventListener('error', function(e) {
             console.error('خطا در بارگیری فایل صوتی کلیک:', e);
@@ -388,7 +381,7 @@
             animatedElement.classList.add('clicked');
             
             // نمایش پیام
-            soundMessage.classList.add('show');
+            
             
             setTimeout(() => {
                 animatedElement.classList.remove('clicked');
