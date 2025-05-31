@@ -290,7 +290,7 @@
                 backgroundMusic.play().then(() => {
                     musicStarted = true;
                     console.log('موسیقی پس‌زمینه شروع شد');
-                    showWelcomeMessage();
+                    
                 }).catch(error => {
                     console.error('خطا در شروع موسیقی پس‌زمینه:', error);
                 });
@@ -313,7 +313,7 @@
             
             if (!audioReady) {
                 console.log('فایل صوتی هنوز آماده نیست');
-                soundMessage.textContent = 'صدا در حال بارگیری... ⏳';
+                
                 soundMessage.classList.add('show');
                 setTimeout(() => soundMessage.classList.remove('show'), 2000);
                 return;
@@ -327,7 +327,7 @@
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         console.log('صدا با موفقیت پخش شد');
-                        soundMessage.textContent = 'صدا پخش شد! 🎶';
+                        
                     }).catch(error => {
                         console.error('خطا در پخش صدا:', error);
                         soundMessage.textContent = 'خطا در پخش صدا! ❌';
