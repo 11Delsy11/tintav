@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایت وان پیج انیمیشنی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            height: 300vh;
+            position: relative;
+            background-attachment: fixed;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 100px;
+            opacity: 0.8;
+        }
+
+        .animated-element {
+            position: fixed;
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height:250px;
+            background-image: url('1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            opacity: 0;
+        }
+
+        .animated-element:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .animated-element.clicked {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+            z-index: 5;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            position: relative;
+        }
+
+        .section:nth-child(2) {
+            backdrop-filter: blur(10px);
+        }
+
+        .section-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .section-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .section-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* محل قرار دادن عکس برای هر سکشن */
+        .section-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            z-index: 1;
+            /* اضافه کردن گرادیانت برای محو کردن لبه‌ها */
+            mask: linear-gradient(to bottom, 
+                transparent 0%, 
+                black 15%, 
+                black 85%, 
+                transparent 100%);
+            -webkit-mask: linear-gradient(to bottom, 
+                transparent 0%, 
+                black 15%, 
+                black 85%, 
+                transparent 100%);
+        }
+
+        /* عکس سکشن اول */
+        .section1-image {
+            background-image: url('2.png');
+        }
+
+        /* عکس سکشن دوم */
+        .section2-image {
+            background-image: url('3.png');
+        }
+
+        /* عکس سکشن سوم */
+        .section3-image {
+            background-image: url('https://s6.uupload.ir/files/tintav.0003_k9ay.png');
+        }
+
+        .sound-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .sound-message.show {
+            opacity: 1;
+        }
+
+        /* پیام خوشامدگویی */
+        .welcome-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 100;
+            max-width: 300px;
+        }
+
+        .welcome-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    
+    <div class="container">
+        <div class="section">
+            <div class="section-image section1-image"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-image section2-image"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-image section3-image"></div>
+            <div class="section-content">
+            </div>
+        </div>
+    </div>
+
+    <div class="animated-element" id="animatedElement"></div>
+    <div class="scroll-indicator">⬇ اسکرول کنید</div>
+    <div class="sound-message" id="soundMessage">صدا پخش شد! 🎶</div>
+    <div class="welcome-message" id="welcomeMessage">🎵 موسیقی پس‌زمینه در حال پخش است</div>
+
+    <!-- المان صوتی برای کلیک -->
+    <audio id="customSound" preload="auto">
+        <source src="mu.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- المان صوتی برای پخش خودکار پس‌زمینه -->
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="mu2.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const animatedElement = document.getElementById('animatedElement');
+        const soundMessage = document.getElementById('soundMessage');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const customSound = document.getElementById('customSound');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let hasScrolled = false;
+        let audioReady = false;
+        let backgroundMusicReady = false;
+        let musicStarted = false;
+
+        // تنظیم صدا
+        customSound.volume = 1;
+        backgroundMusic.volume = 0.08;
+        
+        // بررسی آماده بودن صدای کلیک
+        customSound.addEventListener('canplaythrough', function() {
+            audioReady = true;
+            console.log('فایل صوتی کلیک آماده شد');
+        });
+
+        // بررسی آماده بودن موسیقی پس‌زمینه
+        backgroundMusic.addEventListener('canplaythrough', function() {
+            backgroundMusicReady = true;
+            console.log('موسیقی پس‌زمینه آماده شد');
+        });
+
+        // فعال‌سازی موسیقی پس‌زمینه با تعامل کاربر
+        function enableBackgroundMusic() {
+            if (backgroundMusicReady && !musicStarted) {
+                backgroundMusic.play().then(() => {
+                    musicStarted = true;
+                    console.log('موسیقی پس‌زمینه شروع شد');
+                    showWelcomeMessage();
+                }).catch(error => {
+                    console.error('خطا در شروع موسیقی پس‌زمینه:', error);
+                });
+            }
+        }
+
+        // نمایش پیام خوشامدگویی
+        function showWelcomeMessage() {
+            welcomeMessage.classList.add('show');
+            setTimeout(() => {
+                welcomeMessage.classList.remove('show');
+            }, 4000);
+        }
+
+        // مدیریت خطاهای صوتی
+        customSound.addEventListener('error', function(e) {
+            console.error('خطا در بارگیری فایل صوتی کلیک:', e);
+            soundMessage.textContent = 'خطا در بارگیری صدا! ❌';
+        });
+
+        backgroundMusic.addEventListener('error', function(e) {
+            console.error('خطا در بارگیری موسیقی پس‌زمینه:', e);
+        });
+
+        function playCustomSound() {
+            console.log('تلاش برای پخش صدا...');
+            
+            if (!audioReady) {
+                console.log('فایل صوتی هنوز آماده نیست');
+                soundMessage.textContent = 'صدا در حال بارگیری... ⏳';
+                soundMessage.classList.add('show');
+                setTimeout(() => soundMessage.classList.remove('show'), 2000);
+                return;
+            }
+
+            try {
+                customSound.currentTime = 0;
+                
+                const playPromise = customSound.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('صدا با موفقیت پخش شد');
+                        soundMessage.textContent = 'صدا پخش شد! 🎶';
+                    }).catch(error => {
+                        console.error('خطا در پخش صدا:', error);
+                        soundMessage.textContent = 'خطا در پخش صدا! ❌';
+                        
+                        if (error.name === 'NotAllowedError') {
+                            soundMessage.textContent = 'لطفاً دوباره کلیک کنید! 🔄';
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('خطا در تنظیم صدا:', error);
+                soundMessage.textContent = 'خطا در پخش صدا! ❌';
+            }
+        }
+
+        // انیمیشن اسکرول
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // حرکت پس زمینه
+            document.querySelector('.background-image').style.transform = `translateY(${rate}px)`;
+            
+            // انیمیشن عنصر متحرک
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollPercent = scrolled / (documentHeight - windowHeight);
+            
+            // عنصر متحرک فقط بعد از اسکرول 15% شروع به ظاهر شدن می‌کند
+            if (scrollPercent > 0.15) {
+                const fadeInProgress = Math.min((scrollPercent - 0.15) / 0.1, 1); // 10% برای fade in
+                animatedElement.style.opacity = fadeInProgress;
+                
+                // موقعیت عنصر متحرک
+                const elementTop = -300 + (scrollPercent - 0.15) * 900;
+                animatedElement.style.top = Math.min(elementTop, windowHeight - 200) + 'px';
+                
+                if (!hasScrolled && scrollPercent > 0.6) {
+                    hasScrolled = true;
+                    document.querySelector('.scroll-indicator').style.opacity = '0';
+                }
+            } else {
+                // اگر اسکرول کم باشه، عنصر کاملاً مخفی باشه
+                animatedElement.style.opacity = '0';
+            }
+        });
+
+        // کلیک روی عنصر متحرک
+        animatedElement.addEventListener('click', () => {
+            playCustomSound();
+            animatedElement.classList.add('clicked');
+            
+            // نمایش پیام
+            soundMessage.classList.add('show');
+            
+            setTimeout(() => {
+                animatedElement.classList.remove('clicked');
+                soundMessage.classList.remove('show');
+            }, 2000);
+        });
+
+        // مخفی کردن اندیکاتور اسکرول بعد از مدتی
+        setTimeout(() => {
+            if (!hasScrolled) {
+                document.querySelector('.scroll-indicator').style.opacity = '0.5';
+            }
+        }, 5000);
+
+        // شروع موسیقی پس‌زمینه با تعامل کاربر
+        document.addEventListener('click', enableBackgroundMusic, { once: true });
+        document.addEventListener('scroll', enableBackgroundMusic, { once: true });
+        document.addEventListener('touchstart', enableBackgroundMusic, { once: true });
+
+        // تلاش برای شروع خودکار بعد از بارگیری
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (backgroundMusicReady && !musicStarted) {
+                    enableBackgroundMusic();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
